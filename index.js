@@ -34,11 +34,13 @@ let posts = [
     },
 ];
 
-
+//INDEX ROUTE
 app.get("/posts", (req, res) => {
     res.render("index.ejs", { posts });
 });
 
+
+//NEW ROUTE
 app.get("/posts/new", (req, res) => {
     res.render("new.ejs");
 });
@@ -50,13 +52,22 @@ app.post("/posts", (req, res) => {
     res.redirect("/posts");
 })
 
+//SHOW ROUTE
+
 app.get("/posts/:id", (req, res) => {
     let { id } = req.params;
     console.log(id);
-    let post = posts.find((p) => id === post.id);
-    res.render("show.ejs", { post });
+    let post = posts.find((p) => id === p.id);
+    if (post) {
+        res.render("show.ejs", { post });
+    } else {
+        console.log("error in showing ejs page");
+        res.render("index.ejs");
+    }
 });
 
+
+//EDIT ROUTE
 app.patch("/posts/:id", (req, res) => {
     let { id } = req.params;
     let newContent = req.body.content;
@@ -72,7 +83,7 @@ app.get("/posts/:id/edit", (req, res) => {
     res.render("edit.ejs", { post });
 });
 
-
+//DELETE ROUTE
 app.delete("/posts/:id", (req, res) => {
     let { id } = req.params;
     posts = posts.filter((p) => id != p.id);
