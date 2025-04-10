@@ -40,15 +40,18 @@ app.get("/posts", (req, res) => {
 });
 
 
-//NEW ROUTE
+//NEW ROUTE / CREATE ROUTE
 app.get("/posts/new", (req, res) => {
     res.render("new.ejs");
 });
 
 app.post("/posts", (req, res) => {
     let { username, content } = req.body;
-    let Id = uuidv4();
-    posts.push({ Id, username, content });
+    let id = uuidv4();
+    // console.log(id);
+    let newpost = { id, username, content };
+    posts.push(newpost);
+    console.log(newpost);
     res.redirect("/posts");
 })
 
@@ -80,7 +83,10 @@ app.patch("/posts/:id", (req, res) => {
 app.get("/posts/:id/edit", (req, res) => {
     let { id } = req.params;
     let post = posts.find((p) => id === p.id);
-    res.render("edit.ejs", { post });
+    if (post)
+        res.render("edit.ejs", { post });
+    else
+        res.redirect("index.ejs");
 });
 
 //DELETE ROUTE

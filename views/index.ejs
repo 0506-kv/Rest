@@ -22,12 +22,14 @@
             <br>
 
             <a href="/posts/<%=post.id%>">See in Detail</a>
-            <a href="/posts/<%=post.id%>/edit">Edit</a>
-            <br>
-            <br>
-            <form method="post" action="/posts/<%=post.id%>?_method=DELETE">
-                <button>Delete Post</button>
-            </form>
+            <% if(post.id){ %>
+                <a href="/posts/<%=post.id%>/edit">Edit</a>
+                <% } %>
+                    <br>
+                    <br>
+                    <form method="post" action="/posts/<%=post.id%>?_method=DELETE">
+                        <button>Delete Post</button>
+                    </form>
         </div>
         <% }%>
 
